@@ -6,6 +6,7 @@ import { getUserReceivedDocuments } from "../services/inbox.service";
 import DocumentForwardDialog from "@/features/documents/components/document-forward-dialog";
 import { useState } from "react";
 import RoutingSlipDialog from "./routing-slip-dialog";
+import RevertDialog from "./revert-dialog";
 
 const dialogs: DocumentActionDialog = {
   open: undefined,
@@ -37,7 +38,7 @@ export default function ReceivedList() {
     <>
       <DocumentList data={data} loading={loading}>
         <DocumentItemActionGroupMenu
-          enabledItems={[DocumentActionType.ATTACH_ROUTING]}
+          enabledItems={[DocumentActionType.ATTACH_ROUTING, DocumentActionType.REVERT]}
           primaryActionButton={forwardAction}
           onActionMenuClick={handleMenuClick}
         />
@@ -55,6 +56,11 @@ export default function ReceivedList() {
         setOpen={(open) => handleDialogOpenChange(open, DocumentActionType.ATTACH_ROUTING)}
         documentId={openDialog.documentId}
       />
+
+      <RevertDialog
+        open={openDialog.open === DocumentActionType.REVERT}
+        setOpen={(open) => handleDialogOpenChange(open, DocumentActionType.REVERT)}
+        documentId={openDialog.documentId} />
     </>
   )
 }

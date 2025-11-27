@@ -9,8 +9,8 @@ import { NavLink, Outlet } from "react-router-dom"
 
 const links = [
      {
-          label: 'My Inbox',
-          url: 'inbox/my-inbox'
+          label: 'Personal',
+          url: 'inbox/personal'
      },
      {
           label: 'Office',

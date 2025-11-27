@@ -67,7 +67,7 @@ const router = createBrowserRouter([
             element: <InboxIndex />,
           },
           {
-            path: "my-inbox",
+            path: "personal",
             element: <InboxIndex />,
           },
           {

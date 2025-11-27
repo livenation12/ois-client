@@ -4,17 +4,21 @@ import { MailCheck } from "lucide-react";
 
 import { getOfficePendingDocuments, doReceiveOfficePendingDocument } from "../services/office-inbox.service";
 import DocumentList, { DocumentItemActionGroupMenu } from "@/components/document-list";
+import { useState } from "react";
 
 
 
 export default function OfficePendingList() {
+    const [receivingItem, setReceivingItem] = useState<string | null>(null);
+  
   const { data, loading, refresh } = useFetch<Document[]>(getOfficePendingDocuments, { auto: true });
-  const { execute, loading: receiving } = useFetch(doReceiveOfficePendingDocument, {
+  const { execute } = useFetch(doReceiveOfficePendingDocument, {
     onSuccess: (res) => {
       if (res.success) {
         refresh();
       }
-    }
+    },
+    onFinish: () => setReceivingItem(null)
   });
 
   const receiveAction = { label: 'Receive', icon: MailCheck, action: 'receive' };
@@ -23,6 +27,7 @@ export default function OfficePendingList() {
     if (menu === DocumentActionType.RECEIVE) {
       execute(id);
     }
+    setReceivingItem(id);
   }
 
   return (
@@ -31,7 +36,7 @@ export default function OfficePendingList() {
         <DocumentItemActionGroupMenu
           onActionMenuClick={handleReceiveClick}
           primaryActionButton={receiveAction}
-          primaryActionProps={{ loading: receiving, loadingText: 'Receiving...' }} />
+          primaryActionProps={(id) => ({ loading: receivingItem ? id === receivingItem : false, loadingText: 'Receiving...' })} />
       </DocumentList>
     </>
   )

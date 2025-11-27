@@ -10,6 +10,7 @@ export default function OfficeInbox() {
           { path: "pending", label: "Pending", component: <OfficePendingList /> },
           { path: "received", label: "Received", component: <OfficeReceivedList /> },
           { path: "forwarded", label: "Forwarded", component: <OfficeForwardedList /> },
+          { path: "reverted", label: "Reverted", component: <OfficeForwardedList /> },
      ]
      return (
           <>

@@ -8,6 +8,7 @@ interface NotifState {
 type NotifReducerAction =
      | { type: "ADD_NOTIF"; payload: string }
      | { type: "MARK_AS_READ" }
+     | { type: "MARK_ALL_AS_READ" }
      | { type: "SET_UNREAD_COUNT", payload: number }
 
 type NotifContextType = {
@@ -30,6 +31,11 @@ const reducer = (state: NotifState, action: NotifReducerAction) => {
                return {
                     ...state,
                     unreadCount: action.payload,
+               };
+          case 'MARK_ALL_AS_READ':
+               return {
+                    ...state,
+                    unreadCount: 0,
                };
           default:
                return state;

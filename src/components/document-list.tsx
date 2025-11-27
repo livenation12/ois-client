@@ -1,6 +1,6 @@
 import { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemTitle } from "@/components/ui/item";
 import { DocumentActionType, type Document } from "@/types/document.types";
-import { File, Archive, CircleArrowOutUpLeft, Ellipsis, Paperclip, ReceiptText, type LucideProps } from "lucide-react";
+import { File, Archive, Ellipsis, Paperclip, ReceiptText, type LucideProps, CornerUpLeft } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { uploadsConcat } from "@/utils/utils";
 import { Badge } from "@/components/ui/badge";
@@ -88,7 +88,7 @@ export interface DocumentActionGroupMenuProps {
 }
 
 const defaultActionMenu: DocumentListActionItem[] = [
-     { label: "Revert", icon: CircleArrowOutUpLeft, action: DocumentActionType.REVERT },
+     { label: "Revert", icon: CornerUpLeft, action: DocumentActionType.REVERT },
      { label: "Attach Routing Slip", icon: Paperclip, action: DocumentActionType.ATTACH_ROUTING },
      { label: "Archive", icon: Archive, action: DocumentActionType.ARCHIVE },
 ];

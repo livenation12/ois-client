@@ -11,21 +11,11 @@ export default function InboxIndex() {
     { path: "pending", label: "Pending", component: <PendingList /> },
     { path: "received", label: "Received", component: <ReceivedList /> },
     { path: "forwarded", label: "Forwarded", component: <ForwardedList /> },
+    { path: "reverted", label: "Reverted", component: <ForwardedList /> },
   ]
   return (
     <>
-      {/* <Tabs defaultValue="office-inbox">
-        <div className="flex items-center justify-between">
-          <TabsList className="*:min-w-32">
-            <TabsTrigger value="office-inbox">Office Inbox</TabsTrigger>
-            <TabsTrigger value="my-inbox">My Inbox</TabsTrigger>
-          </TabsList>
-        </div>
-        <TabsContent value="office-inbox"></TabsContent>
-        <TabsContent value="my-inbox">Change your password here.</TabsContent>
-      </Tabs> */}
       <DocTabs tabs={tabs} />
-
     </>
   )
 }

@@ -19,11 +19,12 @@ import { Button } from "./ui/button";
 import useNotif from "@/hooks/use-notif";
 
 export default function NotificationDialog(props: DialogProps) {
-     const { state: notifState } = useNotif();
+     const { state: notifState, dispatch: notifDispatch } = useNotif();
      const { execute, data, loading } = useFetch(getAllNotifications);
      const { execute: markAllAsRead } = useFetch(markAllNotifsAsRead, {
           onSuccess: () => {
                execute();
+               notifDispatch({ type: 'MARK_ALL_AS_READ' })
           }
      });
 
@@ -41,7 +42,7 @@ export default function NotificationDialog(props: DialogProps) {
                          <DialogTitle>Notifications</DialogTitle>
                          <DialogDescription className="flex justify-between">
                               Your recent notifications
-                              <Button variant='ghost' size='sm' onClick={() => markAllAsRead()}>Mark all as read</Button>
+                              <Button disabled={notifState.unreadCount === 0} variant='ghost' size='sm' onClick={() => markAllAsRead()}>Mark all as read</Button>
                          </DialogDescription>
                     </DialogHeader>
                     <div className="max-h-[75vh] overflow-y-auto space-y-2">
@@ -76,7 +77,7 @@ export default function NotificationDialog(props: DialogProps) {
                                    )
                          }
                     </div>
-                         <div className="flex justify-end items-center text-xs text-muted-foreground">{notifState.unreadCount ? `Unread ${notifState.unreadCount}` : `No unread notifications` }</div>
+                    <div className="flex justify-end items-center text-xs text-muted-foreground">{notifState.unreadCount ? `Unread ${notifState.unreadCount}` : `No unread notifications`}</div>
                </DialogContent>
           </Dialog >
      )

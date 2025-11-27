@@ -67,3 +67,17 @@ export const getDocumentDetails = async (documentId: string): Promise<ApiRespons
      const res = await api.get(`/documents/${documentId}`);
      return res.data;
 }
+
+export const revertDocument = async (documentId: string, payload: DocumentActionRequest) => {
+     const res = await api.post(`/documents/${documentId}/revert`, payload);
+     return res.data;
+}
+
+export const getUserRevertedDocuments = async (): Promise<ApiResponse<Document[]>> => {
+     const res = await api.get(`/documents/reverted`);
+     return res.data;
+}
+export const getOfficeRevertedDocuments = async (): Promise<ApiResponse<Document[]>> => {
+     const res = await api.get(`/documents/office-reverted`);
+     return res.data;
+}
