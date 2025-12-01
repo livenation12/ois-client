@@ -1,5 +1,4 @@
-import { Suspense, useEffect } from "react";
-import { useLocation, useNavigate } from "react-router-dom"; // React Router hooks for URL management
+import { Suspense, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ListSkeleton from "./list-skeleton";
 import { Input } from "./ui/input";
@@ -18,27 +17,16 @@ interface DocTabsProps {
 }
 
 export default function DocTabs(props: DocTabsProps) {
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Get the active tab from the URL
-  const activeTab = new URLSearchParams(location.search).get("tab") || props.tabs[props.defaultTabIndex ? props.defaultTabIndex : 0].path;
-
-  useEffect(() => {
-    // Update the URL when activeTab changes
-    if (activeTab) {
-      navigate(`?tab=${activeTab}`, { replace: true });
-    }
-  }, [activeTab, navigate]);
+  const [activeTab, setActiveTab] = useState<string>("");
 
   const handleTabChange = (tab: string) => {
-    navigate(`?tab=${tab}`);
+    setActiveTab(tab);
   };
 
   return (
-    <Tabs value={activeTab} onValueChange={handleTabChange}>
+    <Tabs defaultValue={props.tabs[props.defaultTabIndex || 0].path}value={activeTab} onValueChange={handleTabChange}>
       <div className="flex flex-col lg:flex-row items-center justify-between gap-2">
-        <TabsList className="lg:*:w-32">
+        <TabsList className="md:*:w-32 *:min-w-24">
           {
             props.tabs.map((tab) => (
               <TabsTrigger key={tab.path} value={tab.path}>{tab.label}</TabsTrigger>

@@ -2,7 +2,7 @@ import api from "@/lib/api";
 import type { ApiResponse } from "@/types/api-response.types";
 import type { Notification } from "@/types/notification.types";
 
-export const getUnreadNotificationsCount = async (): Promise<ApiResponse<number>> => {
+export const getUnreadNotifsCount = async (): Promise<ApiResponse<number>> => {
      const res = await api.get('/notifications/unread-count');
      return res.data;
 }
@@ -14,5 +14,14 @@ export const getAllNotifications = async (): Promise<ApiResponse<Notification[]>
 
 export const markAllNotifsAsRead = async (): Promise<ApiResponse<null>> => {
      const res = await api.post('/notifications/mark-all-as-read');
+     return res.data;
+}
+
+export const getPersonalUnreadNotifsCount = async (): Promise<ApiResponse<number>> => {
+     const res = await api.get('/notifications/user/unread-count');
+     return res.data;
+}
+export const getOfficeUnreadNotifsCount = async (): Promise<ApiResponse<number>> => {
+     const res = await api.get('/notifications/user-office/unread-count');
      return res.data;
 }

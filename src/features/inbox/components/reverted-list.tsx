@@ -3,7 +3,7 @@ import { getUserRevertedDocuments } from "@/features/documents/services/document
 import useFetch from "@/hooks/use-fetch";
 
 export default function RevertedList() {
-       const { data, loading, refresh } = useFetch(getUserRevertedDocuments, { auto: true });
+       const { data, loading } = useFetch(getUserRevertedDocuments, { auto: true });
   return (
           <DocumentList data={data} loading={loading}>
             <DocumentItemActionGroupMenu

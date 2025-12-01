@@ -14,11 +14,12 @@ const links = [
      },
      {
           label: 'Office',
-          url: 'inbox/office'
+          url: 'inbox/office',
      }
 ];
 export default function InboxLayout() {
      const { dispatch } = useNavContext();
+
      useEffect(() => {
           dispatch({
                type: 'SET_CONTENT', payload: (

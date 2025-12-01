@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import NotificationDialog from "../notification-dialog";
 import { useState } from "react";
 import useFetch from "@/hooks/use-fetch";
-import { getUnreadNotificationsCount } from "@/services/notif.service";
+import { getUnreadNotifsCount } from "@/services/notif.service";
 import useNotif from "@/hooks/use-notif";
 
 export default function Topbar() {
@@ -17,7 +17,7 @@ export default function Topbar() {
   const { dispatch: notifDispatch } = useNotif();
   const [openNotifDialog, setOpenNotifDialog] = useState(false);
   const navigate = useNavigate();
-  const { data, loading } = useFetch<number>(getUnreadNotificationsCount, {
+  const { data, loading } = useFetch<number>(getUnreadNotifsCount, {
     auto: true,
     onSuccess: (res) => {
       if (res.success) {

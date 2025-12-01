@@ -89,7 +89,7 @@ export interface DocumentActionGroupMenuProps {
 
 const defaultActionMenu: DocumentListActionItem[] = [
      { label: "Revert", icon: CornerUpLeft, action: DocumentActionType.REVERT },
-     { label: "Attach Routing Slip", icon: Paperclip, action: DocumentActionType.ATTACH_ROUTING },
+     { label: "Attach routing", icon: Paperclip, action: DocumentActionType.ATTACH_ROUTING },
      { label: "Archive", icon: Archive, action: DocumentActionType.ARCHIVE },
 ];
 
