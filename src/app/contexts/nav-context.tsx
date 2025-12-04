@@ -6,7 +6,8 @@ type NavReducerAction =
      | { type: "SET_CONTENT"; payload: React.ReactNode }
      | { type: "UNINCLUDE_BREADCRUMB" }
      | { type: "SET_TOOLSET"; payload: React.ReactNode }
-     | { type: "HIDE_BACK_BUTTON" };
+     | { type: "HIDE_BACK_BUTTON" }
+     | { type: "SHOW_BACK_BUTTON" };
 
 
 interface NavReducerState {
@@ -50,6 +51,14 @@ const reducer = (state: NavReducerState, action: NavReducerAction) => {
                     toolset: {
                          ...state.toolset,
                          isBackButtonUsed: false
+                    }
+               }
+          case "SHOW_BACK_BUTTON":
+               return {
+                    ...state,
+                    toolset: {
+                         ...state.toolset,
+                         isBackButtonUsed: true
                     }
                }
           default:

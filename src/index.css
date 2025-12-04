@@ -125,3 +125,7 @@
 a.active {
   @apply bg-sidebar-accent
 }
+
+.main-content {
+  @apply px-2
+}

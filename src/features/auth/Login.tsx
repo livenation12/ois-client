@@ -13,6 +13,8 @@ import { login } from "./services/auth.service";
 import { useNavigate } from "react-router-dom";
 import LoginImg from "@/assets/login.svg";
 import useFetch from "@/hooks/use-fetch";
+import { ButtonGroup } from "@/components/ui/button-group";
+import { Lock } from "lucide-react";
 export default function Login() {
   const navigate = useNavigate();
   const { loading, execute } = useFetch(login, {
@@ -41,7 +43,7 @@ export default function Login() {
   return (
     <div className="h-screen w-screen flex justify-center items-center bg-gray-50">
       <div className="flex flex-col sm:flex-row h-auto lg:h-[70vh] w-[90vw] lg:w-[80vw] p-3 shadow-lg rounded-2xl bg-white overflow-hidden">
-        
+
         {/* Left Illustration */}
         <div className="w-full sm:w-[50%] lg:w-[60%] flex justify-center items-center p-8">
           <img

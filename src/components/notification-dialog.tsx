@@ -11,12 +11,12 @@ import type { DialogProps } from "@/types/common-types"
 import { useEffect } from "react";
 import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Dot } from "lucide-react";
-import NotifListSkeleton from "./notif-list-skeleton";
+import NotifSkeleton from "./skeletons/notif-list-skeleton";
 import { Badge } from "./ui/badge";
 import { Link } from "react-router-dom";
 import { SubjectType } from "@/types/notification.types";
 import { Button } from "./ui/button";
-import useNotif from "@/hooks/use-notif";
+import useNotif from "@/hooks/use-global";
 
 export default function NotificationDialog(props: DialogProps) {
      const { state: notifState, dispatch: notifDispatch } = useNotif();
@@ -45,9 +45,9 @@ export default function NotificationDialog(props: DialogProps) {
                               <Button disabled={notifState.unreadCount === 0} variant='ghost' size='sm' onClick={() => markAllAsRead()}>Mark all as read</Button>
                          </DialogDescription>
                     </DialogHeader>
-                    <div className="max-h-[75vh] overflow-y-auto space-y-2">
+                    <div className="h-[55vh] overflow-y-auto space-y-2">
                          {
-                              loading ? <NotifListSkeleton /> :
+                              loading ? <NotifSkeleton /> :
                                    data && data.length > 0 ? data.map((notif) => (
                                         <Link to={notif.additionalData?.subject === SubjectType.DOCUMENT ? `/documents/${notif.additionalData?.subjectId}` : '#'}
                                              key={notif.id}

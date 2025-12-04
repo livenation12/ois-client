@@ -1,6 +1,6 @@
 import useFetch from "@/hooks/use-fetch"
 import { DocumentActionType, type Document } from "@/types/document.types";
-import { MailCheck } from "lucide-react";
+import { Check } from "lucide-react";
 import DocumentList, { DocumentItemActionGroupMenu } from "@/components/document-list";
 import { doReceivePendingDocument, getUserPendingDocuments } from "../services/inbox.service";
 import { useState } from "react";
@@ -17,7 +17,7 @@ export default function PendingList() {
     , onFinish: () => setReceivingItem(null)
   });
 
-  const receiveAction = { label: 'Receive', icon: MailCheck, action: 'receive' };
+  const receiveAction = { label: 'Receive', icon: Check, action: 'receive' };
 
   const handleReceiveClick = (id: string, menu: string) => {
     if (menu === DocumentActionType.RECEIVE) {

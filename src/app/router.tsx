@@ -9,12 +9,13 @@ import InboxIndex from "@/features/inbox/inbox-index";
 import InboxLayout from "@/features/inbox/layouts/inbox.layout";
 import OfficeInbox from "@/features/inbox/office-inbox";
 import DocumentDetails, { documentDetailsLoader } from "@/features/documents/document-details";
-import DocumentsLayout from "@/features/documents/layout/documents.layout";
 import AuthProvider from "./contexts/auth-context";
 import { DocumentProvider } from "@/features/documents/contexts/document-context";
 import NotReady from "@/features/not-ready";
 import HomeIndex from "@/features/home/home-index";
-import { NotifProvider } from "./contexts/notif-context";
+import { GlobalProvider } from "./contexts/global-context";
+import RoutingsIndex from "@/features/documents/routings/routings-index";
+import DocumentsLayout from "@/features/documents/layout/documents.layout";
 
 const router = createBrowserRouter([
   {
@@ -29,9 +30,9 @@ const router = createBrowserRouter([
     path: "/",
     element:
       <AuthProvider>
-        <NotifProvider>
+        <GlobalProvider>
           <MainLayout />
-        </NotifProvider>
+        </GlobalProvider>
       </AuthProvider>,
     loader: rootLoader,
     children: [
@@ -41,16 +42,26 @@ const router = createBrowserRouter([
       },
       {
         path: "documents",
-        element: <DocumentProvider><DocumentsLayout /></DocumentProvider>,
+        element: <DocumentProvider />,
         children: [
           {
-            index: true,
-            element: <DocumentsIndex />,
+            element: <DocumentsLayout />,
+            children: [
+              {
+                index: true,
+                element: <DocumentsIndex />,
+              },
+              {
+                path: "",
+                element: <DocumentsIndex />,
+              },
+              {
+                path: "routings",
+                element: <RoutingsIndex />,
+              }
+            ]
           },
-          {
-            path: "",
-            element: <DocumentsIndex />,
-          },
+
           {
             path: ":documentId",
             loader: documentDetailsLoader,

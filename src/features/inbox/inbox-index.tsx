@@ -1,7 +1,6 @@
-import DocTabs from "@/components/doc-tabs";
+import DocumentTabs from "@/components/document-tabs";
 import { lazy } from "react";
 import RevertedList from "./components/reverted-list";
-// import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const PendingList = lazy(() => import("./components/pending-list"));
 const ReceivedList = lazy(() => import("./components/received-list"));
@@ -16,7 +15,7 @@ export default function InboxIndex() {
   ]
   return (
     <>
-      <DocTabs tabs={tabs} />
+      <DocumentTabs tabs={tabs} />
     </>
   )
 }

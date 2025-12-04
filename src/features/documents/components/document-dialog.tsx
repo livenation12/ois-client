@@ -19,10 +19,7 @@ import { Button } from "@/components/ui/button"
 import type { DocumentRequest } from "../../../types/document.types"
 import { createDocument } from "../services/document.service"
 import useFetch from "@/hooks/use-fetch"
-
-interface DocumentDialogProps extends DialogProps {
-     onDocumentCreate?: () => void
-}
+import useGlobal from "@/hooks/use-global"
 
 const initialData: DocumentRequest = {
      sourceId: "",
@@ -31,13 +28,14 @@ const initialData: DocumentRequest = {
      description: "",
 }
 
-export default function DocumentDialog(props: DocumentDialogProps) {
+export default function DocumentDialog(props: DialogProps) {
+     const { dispatch: globalDispatch } = useGlobal();
      const [formData, setFormData] = useState(initialData);
      const { execute, loading } = useFetch(createDocument, {
           onSuccess: () => {
                setFormData(initialData);
                props.setOpen(false);
-               props.onDocumentCreate?.();
+               globalDispatch({ type: 'NEW_DOCUMENT_ADDED' });
           }
      });
 

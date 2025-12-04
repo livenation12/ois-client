@@ -1,9 +1,9 @@
 import { Suspense, useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ListSkeleton from "./list-skeleton";
 import { Input } from "./ui/input";
 import { Sliders } from "lucide-react";
 import { Button } from "./ui/button";
+import ListSkeleton from "./skeletons/list-skeleton";
 
 interface Tab {
   component: React.ReactNode;
@@ -17,14 +17,14 @@ interface DocTabsProps {
 }
 
 export default function DocTabs(props: DocTabsProps) {
-  const [activeTab, setActiveTab] = useState<string>("");
+  const [activeTab, setActiveTab] = useState<string>(props.tabs[props.defaultTabIndex || 0].path);
 
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
-  };
+  };  
 
   return (
-    <Tabs defaultValue={props.tabs[props.defaultTabIndex || 0].path}value={activeTab} onValueChange={handleTabChange}>
+    <Tabs value={activeTab} onValueChange={handleTabChange}>
       <div className="flex flex-col lg:flex-row items-center justify-between gap-2">
         <TabsList className="md:*:w-32 *:min-w-24">
           {

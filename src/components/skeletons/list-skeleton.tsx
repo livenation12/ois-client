@@ -1,9 +1,9 @@
-import { Skeleton } from "./ui/skeleton";
+import { Skeleton } from "../ui/skeleton";
 
-export default function ListSkeleton() {
+export default function ListSkeleton({ length = 5 }: { length?: number }) {
      return (
           <div className="flex flex-col items-center gap-3">
-               {Array.from({ length: 3 }).map((_, index) => (
+               {Array.from({ length }).map((_, index) => (
 
                     <div className="border rounded-md w-full p-3" key={index}>
                          <div className="space-y-2">

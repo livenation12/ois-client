@@ -1,22 +1,17 @@
 import { Item, ItemActions, ItemContent, ItemDescription, ItemFooter, ItemTitle } from "@/components/ui/item";
-import { DocumentActionType, type Document } from "@/types/document.types";
-import { File, Archive, Ellipsis, Paperclip, ReceiptText, type LucideProps, CornerUpLeft } from "lucide-react";
+import { DocumentActionType, type Document, type DocumentActionGroupMenuProps, type DocumentActionItem } from "@/types/document.types";
+import { File, Archive, Ellipsis, Paperclip, ReceiptText, CornerUpLeft } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { uploadsConcat } from "@/utils/utils";
 import { Badge } from "@/components/ui/badge";
-import ListSkeleton from "./list-skeleton";
-import NoListFound from "./no-list-found";
+import ListSkeleton from "./skeletons/list-skeleton";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { ButtonGroup } from "@/components/ui/button-group";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import React, { createContext, useContext } from "react";
+import NoDocumentFound from "../features/documents/components/no-document-found";
 
-export interface DocumentListActionItem {
-     label: string;
-     icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
-     action: string;
-}
 
 const DocumentItemContext = createContext<Document | null>(null);
 
@@ -29,7 +24,7 @@ interface DocumentListProps {
 export default function DocumentList({ loading, data, children }: DocumentListProps) {
 
      if (loading) return <ListSkeleton />;
-     if (data?.length === 0) return <NoListFound title="No documents found" />;
+     if (data?.length === 0) return <NoDocumentFound title="No documents found" />;
 
      return (
           <div className="space-y-3">
@@ -74,20 +69,7 @@ export default function DocumentList({ loading, data, children }: DocumentListPr
      );
 }
 
-export interface DocumentActionGroupMenuProps {
-     onActionMenuClick?: (documentId: string, menu: string) => void;
-     additionalMenuItems?: DocumentListActionItem[];
-     disabledItems?: string[];
-     disableAllMenuItems?: boolean;
-     enabledItems?: string[];
-     primaryActionButton?: DocumentListActionItem;
-     primaryActionProps?: (id: string) => {
-          loading: boolean;
-          loadingText: string;
-     };
-}
-
-const defaultActionMenu: DocumentListActionItem[] = [
+export const defaultActionMenu: DocumentActionItem[] = [
      { label: "Revert", icon: CornerUpLeft, action: DocumentActionType.REVERT },
      { label: "Attach routing", icon: Paperclip, action: DocumentActionType.ATTACH_ROUTING },
      { label: "Archive", icon: Archive, action: DocumentActionType.ARCHIVE },

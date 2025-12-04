@@ -1,4 +1,5 @@
 import { createContext, useContext, useReducer } from "react";
+import { Outlet } from "react-router-dom";
 
 interface DocumentReducerState {
      refresh: {
@@ -13,8 +14,6 @@ interface DocumentContextType {
 }
 
 type DocumentReducerAction = { type: "REFRESH_ALL_LIST" } | { type: "REFRESH_RECEIVED_LIST" }
-
-
 
 export const DocumentContext = createContext<DocumentContextType | null>(null);
 
@@ -46,9 +45,9 @@ const initialState = {
      }
 }
 
-export const DocumentProvider = ({ children }: { children: React.ReactNode }) => {
+export const DocumentProvider = () => {
      const [state, dispatch] = useReducer(reducer, initialState);
-     return <DocumentContext value={{ state, dispatch }}>{children}</DocumentContext>
+     return <DocumentContext value={{ state, dispatch }}><Outlet /></DocumentContext>
 }
 
 export const useDocumentContext = () => {

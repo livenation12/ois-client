@@ -1,6 +1,6 @@
 import api from "@/lib/api";
 import type { ApiResponse } from "@/types/api-response.types";
-import type { Document, DocumentAction, DocumentActionRequest, DocumentStatus } from "@/types/document.types";
+import type { Document, DocumentActionRequest, DocumentLog, DocumentStatus } from "@/types/document.types";
 import type { RoutingSlip } from "@/types/routing-slip.types";
 
 export const getDocuments = async () => {
@@ -28,8 +28,8 @@ export const getDocumentFullDetails = async (documentId: string): Promise<ApiRes
      return res.data;
 }
 
-export const getDocumentActions = async (documentId: string): Promise<ApiResponse<DocumentAction[]>> => {
-     const res = await api.get(`/documents/${documentId}/actions`);
+export const getDocumentLogs = async (documentId: string): Promise<ApiResponse<DocumentLog[]>> => {
+     const res = await api.get(`/documents/${documentId}/logs`);
      return res.data;
 }
 
@@ -38,8 +38,8 @@ export const getDocumentRoutings = async (documentId: string): Promise<ApiRespon
      return response.data;
 }
 
-export const getDocumentActionFullDetails = async (actionId: string): Promise<ApiResponse<DocumentAction>> => {
-     const response = await api.get(`/documents/actions/${actionId}`);
+export const getDocumentActionFullDetails = async (logId: string): Promise<ApiResponse<DocumentLog>> => {
+     const response = await api.get(`/documents/logs/${logId}`);
      return response.data;
 }
 
@@ -59,7 +59,7 @@ export const getForwardedDocuments = async (): Promise<ApiResponse<Document[]>> 
 }
 
 export const getCreatedDocuments = async (): Promise<ApiResponse<Document[]>> => {
-     const res = await api.get('/documents/principal');
+     const res = await api.get('/documents/user');
      return res.data;
 }
 

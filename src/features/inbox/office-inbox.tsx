@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import DocTabs from "@/components/doc-tabs";
+import DocumentTabs from "@/components/document-tabs";
 
 const OfficePendingList = lazy(() => import("./components/office-pending-list"));
 const OfficeReceivedList = lazy(() => import("./components/office-received-list"));
@@ -15,7 +15,7 @@ export default function OfficeInbox() {
      ]
      return (
           <>
-               <DocTabs tabs={tabs} />
+               <DocumentTabs tabs={tabs} />
           </>
      )
 }

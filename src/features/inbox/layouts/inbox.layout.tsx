@@ -37,7 +37,7 @@ export default function InboxLayout() {
           dispatch({
                type: "SET_TOOLSET", payload: null
           })
-     }, []);
+     }, [dispatch]);
      return (
           <Outlet />
      )

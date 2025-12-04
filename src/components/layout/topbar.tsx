@@ -1,4 +1,3 @@
-import { useNavContext } from "@/hooks/use-nav";
 import { ModeToggle } from "../mode-toggle";
 import { SidebarTrigger } from "../ui/sidebar";
 import { Separator } from "../ui/separator";
@@ -10,18 +9,24 @@ import NotificationDialog from "../notification-dialog";
 import { useState } from "react";
 import useFetch from "@/hooks/use-fetch";
 import { getUnreadNotifsCount } from "@/services/notif.service";
-import useNotif from "@/hooks/use-notif";
+import useGlobal from "@/hooks/use-global";
 
-export default function Topbar() {
-  const { state } = useNavContext();
-  const { dispatch: notifDispatch } = useNotif();
+interface TopbarProps {
+  content?: React.ReactNode | string
+  toolset?: React.ReactNode
+  includeBackButton?: boolean
+
+}
+
+export default function Topbar(props: TopbarProps) {
+  const { dispatch: globalDispatch } = useGlobal();
   const [openNotifDialog, setOpenNotifDialog] = useState(false);
   const navigate = useNavigate();
   const { data, loading } = useFetch<number>(getUnreadNotifsCount, {
     auto: true,
     onSuccess: (res) => {
       if (res.success) {
-        notifDispatch({
+        globalDispatch({
           type: "SET_UNREAD_COUNT",
           payload: res.data || 0
         })
@@ -30,19 +35,16 @@ export default function Topbar() {
   });
 
   return (
-    <div>
-      <div className="flex flex-wrap items-center justify-between px-4 py-2 border-b">
+    <div className="sticky top-0 z-50 bg-background">
+      <div className="flex flex-col md:flex-row flex-wrap md:items-center md:justify-between px-4 py-2 border-b">
         <div className="flex items-center gap-3">
           <SidebarTrigger />
           <Separator orientation="vertical" />
-          {state.content}
+          {props.content}
           <Separator orientation="vertical" />
         </div>
-        <div className="flex items-center gap-8">
-          {
-            state.breadcrumb &&
-            <Breadcrumbs />
-          }
+        <div className="flex justify-between items-center gap-8">
+          <Breadcrumbs />
           <div className="space-x-3">
             <Button variant="ghost" size="icon" onClick={() => setOpenNotifDialog(true)} className="relative">
               {
@@ -55,15 +57,16 @@ export default function Topbar() {
           </div>
         </div>
       </div>
-      {state.toolset ? (
-        <div id="toolset" className="flex justify-between items-center px-4 py-2">
+      {(props.toolset || props.includeBackButton) &&
+        <div id="toolset" className="flex justify-between items-center p-2">
           <div>
-            {state.toolset.isBackButtonUsed && <Button variant="secondary" onClick={() => navigate(-1)}> <ChevronLeft />Go Back</Button>}
+            {props.includeBackButton && <Button variant="secondary" onClick={() => navigate(-1)}> <ChevronLeft />Go Back</Button>}
           </div>
-          {state.toolset.content}
+          <div>
+            {props.toolset}
+          </div>
         </div>
-      ) :
-        null}
+      }
       <NotificationDialog open={openNotifDialog} setOpen={setOpenNotifDialog} />
     </div>
   )

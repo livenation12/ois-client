@@ -1,35 +1,21 @@
-import { Button } from '@/components/ui/button';
-import { useNavContext } from '@/hooks/use-nav';
-import { useEffect, useState } from 'react';
+
 import { Outlet } from 'react-router-dom';
-import DocumentDialog from '../components/document-dialog';
-import { useDocumentContext } from '../contexts/document-context';
+import Topbar from '@/components/layout/topbar';
+import { Button } from '@/components/ui/button';
+import useGlobal from '@/hooks/use-global';
+import { FilePlus } from 'lucide-react';
 
 export default function DocumentsLayout() {
-  const [openDialog, setOpenDialog] = useState(false);
-  const { dispatch } = useNavContext();
-  const { dispatch: dispatchDocument } = useDocumentContext();
+  const { dispatch: globalDispatch } = useGlobal();
 
-  useEffect(() => {
-    dispatch({
-      type: 'SET_CONTENT', payload: <span className=''>Documents</span>
-    });
-    dispatch({
-      type: "SET_TOOLSET", payload: (
-        <div className='flex gap-2'>
-          <Button onClick={() => setOpenDialog(true)}>Add Document</Button>
-        </div>
-      )
-    })
-  }, []);
-
-  const handleDocumentCreate = () => {
-    dispatchDocument({ type: 'REFRESH_RECEIVED_LIST' });
-  }
   return (
     <>
-      <DocumentDialog open={openDialog} setOpen={setOpenDialog} onDocumentCreate={handleDocumentCreate} />
-      <Outlet />
+      <Topbar content='Documents' toolset={<Button onClick={() => globalDispatch({ type: 'TOGGLE_DOCUMENT_DIALOG' })}><FilePlus /> New Document</Button>} />
+      <div className='main-content'>
+        <Outlet />
+      </div>
     </>
   )
 }
+
+

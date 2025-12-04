@@ -1,7 +1,8 @@
+import type { LucideProps } from "lucide-react";
 import type { Attachment } from "./attachment.types";
-import type { OfficeMin } from "./office-types";
+import type { Entity } from "./entity.types";
 import type { RoutingSlip } from "./routing-slip.types";
-import type { User, UserMin } from "./user.types";
+import type { User } from "./user.types";
 
 export interface Document {
      id: string;
@@ -18,19 +19,20 @@ export interface Document {
      activeLog?: DocumentAction;
 }
 
-export type DocumentStatus = "received" | "forwarded" | "pending" | "approved";
-export type RoutingAction = "forwarded" | "approved" | "received" | "reverted";
+export type DocumentStatus = "completed" | "pending" | "approved" | "archived";
+export type DocumentAction = "forwarded" | "approved" | "received" | "reverted";
 
-export interface DocumentAction {
+export interface DocumentLog {
      id: string;
-     action: RoutingAction;
+     action: DocumentAction;
      documentId: string;
-     from: OfficeMin | UserMin;
-     to: OfficeMin | UserMin;
+     from: Entity;
+     to: Entity;
      remarks: string;
      additionalRemarks: string;
      createdAt: string;
      attachedRouting?: RoutingSlip
+     isActive: boolean;
 }
 
 export interface DocumentAttachment extends Attachment {
@@ -70,4 +72,24 @@ export interface DocumentActionDialog {
 export interface RevertDocumentRequest {
      remarks: string;
      additionalRemarks?: string;
+}
+
+export interface DocumentActionItem {
+     label: string;
+     icon: React.ForwardRefExoticComponent<Omit<LucideProps, "ref"> & React.RefAttributes<SVGSVGElement>>;
+     action: string;
+}
+
+
+export interface DocumentActionGroupMenuProps {
+     onActionMenuClick?: (documentId: string, menu: string) => void;
+     additionalMenuItems?: DocumentActionItem[];
+     disabledItems?: string[];
+     disableAllMenuItems?: boolean;
+     enabledItems?: string[];
+     primaryActionButton?: DocumentActionItem;
+     primaryActionProps?: (id: string) => {
+          loading: boolean;
+          loadingText: string;
+     };
 }

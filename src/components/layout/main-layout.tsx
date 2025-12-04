@@ -2,7 +2,6 @@ import { AppSidebar } from '@/components/app-sidebar'
 import { Outlet } from 'react-router-dom'
 import { SidebarProvider } from '../ui/sidebar'
 import { ThemeProvider } from '../theme-provider'
-import Topbar from './topbar'
 import { NavProvider } from '@/app/contexts/nav-context'
 
 
@@ -20,11 +19,8 @@ export default function MainLayout() {
             {/* Sidebar */}
 
             {/* Main Content */}
-            <main className="flex flex-col flex-1 overflow-hidden">
-              <Topbar />
-              <div className="flex-1 overflow-auto px-4 py-2">
+            <main className="flex flex-col flex-1">
                 <Outlet />
-              </div>
             </main>
             {/* Main Content */}
 

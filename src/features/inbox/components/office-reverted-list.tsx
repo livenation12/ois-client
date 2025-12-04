@@ -3,7 +3,7 @@ import { getOfficeRevertedDocuments } from "@/features/documents/services/docume
 import useFetch from "@/hooks/use-fetch";
 
 export default function OfficeRevertedList() {
-       const { data, loading, refresh } = useFetch(getOfficeRevertedDocuments, { auto: true });
+       const { data, loading } = useFetch(getOfficeRevertedDocuments, { auto: true });
   return (
           <DocumentList data={data} loading={loading}>
             <DocumentItemActionGroupMenu

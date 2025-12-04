@@ -10,6 +10,7 @@ import { Field, FieldLabel, FieldSet } from '@/components/ui/field'
 import useFetch from '@/hooks/use-fetch'
 import EmployeeSelect from '@/components/employee-select'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { Forward } from 'lucide-react'
 
 interface DocumentForwardDialogProps extends DialogProps {
      documentId: string
@@ -65,18 +66,14 @@ export default function DocumentForwardDialog(props: DocumentForwardDialogProps)
                     <DialogHeader>
                          <DialogTitle>Forward document</DialogTitle>
                          <DialogDescription>
-                              Forward document to another office
+                              Forward document to others
                          </DialogDescription>
                     </DialogHeader>
                     <form onSubmit={handleSubmit}>
                          <FieldSet>
                               <Field>
                                    <FieldLabel>Remarks</FieldLabel>
-                                   <Textarea onChange={handleChange} name='remarks' />
-                              </Field>
-                              <Field>
-                                   <FieldLabel>Additional Remarks</FieldLabel>
-                                   <Textarea onChange={handleChange} name='additionalRemarks' />
+                                   <Textarea onChange={handleChange} rows={5} name='remarks' />
                               </Field>
                               <Field>
                                    <h5 className='font-semibold text-md'>Forward to</h5>
@@ -94,7 +91,7 @@ export default function DocumentForwardDialog(props: DocumentForwardDialogProps)
                                    </Tabs>
                               </Field>
                               <Field>
-                                   <Button loading={loading} loadingText='Forwarding...' type='submit'>Forward</Button>
+                                   <Button loading={loading} loadingText='Forwarding...' type='submit'><Forward /> Forward</Button>
                               </Field>
                          </FieldSet>
                     </form>
