@@ -1,4 +1,4 @@
-import { Calendar, ChartNoAxesGantt, ChevronDown, FilePlus, Files, Home, Inbox, LogOut, Route, Settings, User } from "lucide-react"
+import { Calendar, ChartNoAxesGantt, ChevronDown, Home, Inbox, LogOut, Settings, User } from "lucide-react"
 import {
      Sidebar,
      SidebarContent,
@@ -10,31 +10,24 @@ import {
      SidebarMenu,
      SidebarMenuButton,
      SidebarMenuItem,
-     SidebarMenuSub,
-     SidebarMenuSubItem,
      useSidebar,
 } from "@/components/ui/sidebar"
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
 import Icon from "@/assets/dasmo-icon.jpg"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "./ui/collapsible"
 import { NavLink } from "react-router-dom"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from "./ui/dropdown-menu"
 import { logout } from "@/features/auth/services/auth.service"
 import { useAuth } from "@/hooks/use-auth"
 import useGlobal from "@/hooks/use-global"
-import { Button } from "./ui/button"
-import { Separator } from "./ui/separator"
+import DocumentsMenu from "./sidebar-includes/documents-menu"
+import InboxMenu from "./sidebar-includes/inbox-menu"
+
 
 const items = [
      {
           title: "Home",
           url: "",
           icon: Home,
-     },
-     {
-          title: "Inbox",
-          url: "inbox",
-          icon: Inbox,
      },
      {
           title: "Calendar",
@@ -57,6 +50,7 @@ export function AppSidebar() {
      const { open } = useSidebar();
      const user = useAuth();
      const { dispatch: dispatchGlobal } = useGlobal();
+
      const filteredRoutes = items.filter(item => {
           if (item.accessRole) {
                return item.accessRole.some(role => user.roles.includes(role));
@@ -94,68 +88,8 @@ export function AppSidebar() {
                                              </SidebarMenuButton>
                                         </SidebarMenuItem>
                                    ))}
-                                   <Collapsible className="group/collapsible">
-                                        <SidebarMenuItem>
-                                             <CollapsibleTrigger asChild>
-                                                  <SidebarMenuButton>
-                                                       Inbox <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                                                  </SidebarMenuButton>
-                                             </CollapsibleTrigger>
-                                             <CollapsibleContent className="mt-1">
-                                                  <SidebarMenuSub>
-                                                       <SidebarMenuSubItem>
-                                                            <SidebarMenuButton asChild>
-                                                                 <NavLink to="/inbox/personal">
-                                                                      Personal
-                                                                 </NavLink>
-                                                            </SidebarMenuButton>
-                                                       </SidebarMenuSubItem>
-                                                       <SidebarMenuSubItem>
-                                                            <SidebarMenuButton asChild>
-                                                                 <NavLink to="/inbox/office">
-                                                                      Office
-                                                                 </NavLink>
-                                                            </SidebarMenuButton>
-                                                       </SidebarMenuSubItem>
-                                                  </SidebarMenuSub>
-                                             </CollapsibleContent>
-                                        </SidebarMenuItem>
-                                   </Collapsible>
-                                   <Collapsible defaultOpen className="group/collapsible">
-                                        <SidebarMenuItem>
-                                             <CollapsibleTrigger asChild>
-                                                  <SidebarMenuButton>
-                                                       Documents <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
-                                                  </SidebarMenuButton>
-                                             </CollapsibleTrigger>
-                                             <CollapsibleContent className="mt-1">
-                                                  <SidebarMenuSub>
-                                                       <SidebarMenuSubItem>
-                                                            <SidebarMenuButton asChild>
-                                                                 <Button variant="outline" onClick={() => dispatchGlobal({ type: "TOGGLE_DOCUMENT_DIALOG" })}>
-                                                                      <FilePlus /> New Document
-                                                                 </Button>
-                                                            </SidebarMenuButton>
-                                                       </SidebarMenuSubItem>
-                                                       <Separator className="my-0.5"/>
-                                                       <SidebarMenuSubItem>
-                                                            <SidebarMenuButton asChild>
-                                                                 <NavLink to="/documents" end>
-                                                                      <Files /> Listing
-                                                                 </NavLink>
-                                                            </SidebarMenuButton>
-                                                       </SidebarMenuSubItem>
-                                                       <SidebarMenuSubItem>
-                                                            <SidebarMenuButton asChild>
-                                                                 <NavLink to="/documents/routings">
-                                                                      <Route /> Routings
-                                                                 </NavLink>
-                                                            </SidebarMenuButton>
-                                                       </SidebarMenuSubItem>
-                                                  </SidebarMenuSub>
-                                             </CollapsibleContent>
-                                        </SidebarMenuItem>
-                                   </Collapsible>
+                                   <InboxMenu />
+                                   <DocumentsMenu />
                               </SidebarMenu>
                          </SidebarGroupContent>
                     </SidebarGroup>
@@ -171,9 +105,7 @@ export function AppSidebar() {
                                    <div className="flex flex-col gap-2">
                                         <p className="text-sm font-medium leading-none capitalize">{user.username}</p>
                                         <p className="text-xs leading-none text-muted-foreground flex gap-1">
-                                             {/* {user.office.department}
-                                             <Separator orientation="vertical" /> */}
-                                             {user.office.name}
+                                             <span>{user.office.department}</span> - <span>{user.office.name}</span>
                                         </p>
                                    </div>
                               </div>

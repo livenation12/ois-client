@@ -12,6 +12,7 @@ import { Textarea } from '@/components/ui/textarea'
 
 interface RoutingSlipDialogProps extends DialogProps {
      documentId: string
+     onSuccess?: () => void
 }
 
 const initialData: RoutingSlipRequest = {
@@ -24,8 +25,15 @@ const initialData: RoutingSlipRequest = {
 
 }
 
-export default function RoutingSlipDialog(props: RoutingSlipDialogProps) {
-     const { execute } = useFetch(createRoutingSlip);
+export default function RoutingSlipDialog({ closeOnSucceed = true, ...props }: RoutingSlipDialogProps) {
+     const { execute } = useFetch(createRoutingSlip, {
+          onSuccess: (res) => {
+               if (res.success) {
+                    props.onSuccess?.();
+                    if (closeOnSucceed) props.setOpen(false);
+               }
+          }
+     });
      const [formData, setFormData] = useState(initialData);
 
      const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -76,11 +84,11 @@ export default function RoutingSlipDialog(props: RoutingSlipDialogProps) {
                          <FieldSet>
                               <Field>
                                    <FieldLabel htmlFor="title">Title</FieldLabel>
-                                   <Input onChange={handleChange} name='title' id='title' />
+                                   <Textarea rows={2} onChange={handleChange} name='title' id='title' />
                               </Field>
                               <Field>
                                    <FieldLabel htmlFor="subject">Subject</FieldLabel>
-                                   <Textarea onChange={handleChange} name='subject' id='subject' />
+                                   <Textarea rows={3} onChange={handleChange} name='subject' id='subject' />
                               </Field>
                               <Field>
                                    <FieldLabel htmlFor="attachment">Attachment</FieldLabel>

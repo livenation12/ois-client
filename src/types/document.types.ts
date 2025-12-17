@@ -16,11 +16,11 @@ export interface Document {
      attachments?: DocumentAttachment[];
      createdBy: User;
      createdAt: string;
-     activeLog?: DocumentAction;
+     activeLog?: DocumentLog;
 }
 
 export type DocumentStatus = "completed" | "pending" | "approved" | "archived";
-export type DocumentAction = "forwarded" | "approved" | "received" | "reverted";
+export type DocumentAction = "forwarded" | "approved" | "received" | "reverted" | "archived" | "encoded";
 
 export interface DocumentLog {
      id: string;
@@ -53,6 +53,7 @@ export interface DocumentActionRequest {
      remarks?: string;
      additionalRemarks?: string;
      targetType: string;
+     sourceType: string
 }
 
 export const DocumentActionType = {

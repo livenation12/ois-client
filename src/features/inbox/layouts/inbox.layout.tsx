@@ -1,44 +1,46 @@
+import Topbar from "@/components/layout/topbar";
 import {
      NavigationMenu,
      NavigationMenuLink,
      NavigationMenuList,
 } from "@/components/ui/navigation-menu"
-import { useNavContext } from "@/hooks/use-nav";
-import { useEffect } from "react";
 import { NavLink, Outlet } from "react-router-dom"
 
-const links = [
+export default function InboxLayout() {
+     return (
+          <>
+               <Topbar content={<InboxTopbarContent />} />
+               <div className='main-content py-2'>
+
+                    <Outlet />
+               </div>
+          </>
+
+     )
+}
+
+const inboxNavs = [
      {
           label: 'Personal',
-          url: 'inbox/personal'
+          path: '/inbox/personal'
      },
      {
           label: 'Office',
-          url: 'inbox/office',
+          path: '/inbox/office'
      }
-];
-export default function InboxLayout() {
-     const { dispatch } = useNavContext();
+]
 
-     useEffect(() => {
-          dispatch({
-               type: 'SET_CONTENT', payload: (
-                    <NavigationMenu>
-                         <NavigationMenuList>
-                              {links.map((link, index) => (
-                                   <NavigationMenuLink asChild key={index}>
-                                        <NavLink to={link.url}>{link.label}</NavLink>
-                                   </NavigationMenuLink>
-                              ))}
-                         </NavigationMenuList>
-                    </NavigationMenu>
-               )
-          });
-          dispatch({
-               type: "SET_TOOLSET", payload: null
-          })
-     }, [dispatch]);
+const InboxTopbarContent = () => {
+
      return (
-          <Outlet />
+          <NavigationMenu>
+               <NavigationMenuList>
+                    {inboxNavs.map((link, index) => (
+                         <NavigationMenuLink asChild key={index}>
+                              <NavLink to={link.path}>{link.label}</NavLink>
+                         </NavigationMenuLink>
+                    ))}
+               </NavigationMenuList>
+          </NavigationMenu>
      )
 }

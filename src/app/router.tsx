@@ -55,13 +55,12 @@ const router = createBrowserRouter([
                 path: "",
                 element: <DocumentsIndex />,
               },
-              {
-                path: "routings",
-                element: <RoutingsIndex />,
-              }
             ]
           },
-
+          {
+            path: "routings",
+            element: <RoutingsIndex />,
+          },
           {
             path: ":documentId",
             loader: documentDetailsLoader,

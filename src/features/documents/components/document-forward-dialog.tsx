@@ -22,6 +22,7 @@ const initialData: DocumentActionRequest = {
      remarks: '',
      additionalRemarks: '',
      targetType: 'User',
+     sourceType: 'Office'
 }
 
 export default function DocumentForwardDialog(props: DocumentForwardDialogProps) {
@@ -73,12 +74,12 @@ export default function DocumentForwardDialog(props: DocumentForwardDialogProps)
                          <FieldSet>
                               <Field>
                                    <FieldLabel>Remarks</FieldLabel>
-                                   <Textarea onChange={handleChange} rows={5} name='remarks' />
+                                   <Textarea onChange={handleChange} rows={3} name="remarks" />
                               </Field>
                               <Field>
-                                   <h5 className='font-semibold text-md'>Forward to</h5>
-                                   <Tabs defaultValue='User' onValueChange={handleTabChange}>
-                                        <TabsList className='my-2'>
+                                   <h5 className="font-semibold text-md">Forward to</h5>
+                                   <Tabs defaultValue="User" onValueChange={handleTabChange}>
+                                        <TabsList className="my-2">
                                              <TabsTrigger value="User">Employee</TabsTrigger>
                                              <TabsTrigger value="Office">Office</TabsTrigger>
                                         </TabsList>

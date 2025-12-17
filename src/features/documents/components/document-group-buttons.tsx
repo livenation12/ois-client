@@ -3,11 +3,12 @@ import { Button } from '@/components/ui/button'
 import { ButtonGroup } from '@/components/ui/button-group'
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
 import type { DocumentActionGroupMenuProps } from '@/types/document.types'
-import { ChevronDown, Pen } from 'lucide-react'
+import { ChevronDown, Forward, Pen } from 'lucide-react'
 
-
+const forwardAction = { label: 'Forward', icon: Forward, action: 'forward' }
 export default function DocumentActionButtons({ disableAllMenuItems = true, documentId, ...props }: DocumentActionGroupMenuProps & { documentId: string }) {
-     const menuItems = [...defaultActionMenu, ...(props.additionalMenuItems || [])];
+     
+     const menuItems =  [ forwardAction, ...defaultActionMenu,  ...(props.additionalMenuItems || [])];
 
      return (
           <div className='flex gap-2'>

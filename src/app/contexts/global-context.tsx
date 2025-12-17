@@ -1,4 +1,3 @@
-import DocumentDialog from "@/features/documents/components/document-dialog";
 import { createContext, lazy, Suspense, useReducer } from "react";
 
 interface GlobalState {
@@ -7,6 +6,9 @@ interface GlobalState {
      document: {
           openDialog: boolean;
           newDocumentCount: number
+     }
+     inbox: {
+          unreadCount: number
      }
 }
 
@@ -18,6 +20,7 @@ type GlobalReducerAction =
      | { type: "OPEN_DOCUMENT_DIALOG" }
      | { type: "TOGGLE_DOCUMENT_DIALOG" }
      | { type: "NEW_DOCUMENT_ADDED" }
+     | { type: "SET_INBOX_UNREAD_COUNT", payload: number }
 
 type GlobalContextType = {
      state: GlobalState
@@ -61,6 +64,14 @@ const reducer = (state: GlobalState, action: GlobalReducerAction) => {
                          newDocumentCount: state.document.newDocumentCount++
                     }
                }
+          case 'SET_INBOX_UNREAD_COUNT':
+               return {
+                    ...state,
+                    document: {
+                         ...state.document,
+                         newDocumentCount: state.document.newDocumentCount++
+                    }
+               }
           default:
                return state;
      }
@@ -72,6 +83,9 @@ const initialState: GlobalState = {
      document: {
           openDialog: false,
           newDocumentCount: 0
+     },
+     inbox: {
+          unreadCount: 0
      }
 }
 
@@ -79,11 +93,10 @@ const DocusmentDialog = lazy(() => import("@/features/documents/components/docum
 
 export const GlobalProvider = ({ children }: { children: React.ReactNode }) => {
      const [state, dispatch] = useReducer(reducer, initialState);
-
      const setOpen = () => {
           dispatch({ type: 'TOGGLE_DOCUMENT_DIALOG' });
      };
-     
+
      return (
           <>
                <GlobalContext value={{ state, dispatch }}>

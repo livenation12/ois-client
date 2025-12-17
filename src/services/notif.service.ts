@@ -25,3 +25,12 @@ export const getOfficeUnreadNotifsCount = async (): Promise<ApiResponse<number>>
      const res = await api.get('/notifications/user-office/unread-count');
      return res.data;
 }
+
+interface GetUnreadNotifsBySubjectResponse {
+     inbox: number;
+}
+
+export const getUnreadNotifsBySubject = async (): Promise<ApiResponse<GetUnreadNotifsBySubjectResponse>> => {
+     const res = await api.get(`/notifications/subjects/unread-count`);
+     return res.data;
+}

@@ -28,13 +28,15 @@ const initialData = {
      department: "",
 }
 
-export default function OfficeDialog(props: OfficeDialogProps) {
+export default function OfficeDialog({ closeOnSucceed = true, ...props }: OfficeDialogProps) {
      const [formData, setFormData] = useState<OfficeForm>(initialData);
      const { execute, loading } = useFetch(createOffice, {
           onSuccess: () => {
                setFormData(initialData);
-               props.setOpen(false);
                props.onCreate();
+               if (closeOnSucceed) {
+                    props.setOpen(false);
+               }
           }
      });
 

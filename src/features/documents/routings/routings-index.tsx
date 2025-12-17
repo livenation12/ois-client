@@ -1,6 +1,9 @@
+import Topbar from "@/components/layout/topbar";
 
 export default function RoutingsIndex() {
   return (
-    <div>RoutingsIndex</div>
+    <>
+      <Topbar content="Routings" />
+    </>
   )
 }

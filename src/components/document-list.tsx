@@ -31,14 +31,18 @@ export default function DocumentList({ loading, data, children }: DocumentListPr
                {data?.map((item, index) => (
                     <Item variant="outline" key={index}>
                          <ItemContent>
-                              <ItemTitle className="font-semibold">
-                                   <span className="text-muted-foreground">#{item.documentCode}</span>
-                                   {item.title}
-                              </ItemTitle>
-                              {item.sourceName}
-                              <ItemDescription>
-                                   {item.description}
-                              </ItemDescription>
+                              <div className="flex flex-col lg:flex-row items-start">
+                                   <div className="inline-flex flex-col w-full lg:w-1/3 lg:pe-5">
+                                        <ItemTitle className="font-semibold w-full">
+                                             <span className="text-muted-foreground">#{item.documentCode}</span>
+                                             <h6 className="truncate">{item.title}</h6>
+                                        </ItemTitle>
+                                        {item.sourceName}
+                                   </div>
+                                   <ItemDescription className="text-start w-full lg:w-2/3">
+                                        {item.description}
+                                   </ItemDescription>
+                              </div>
                          </ItemContent>
                          <ItemActions>
                               <DocumentItemContext
@@ -105,10 +109,10 @@ export function DocumentItemActionGroupMenu({ disableAllMenuItems = true, ...pro
                                    <DropdownMenuItem
                                         key={idx}
                                         onClick={() => props.onActionMenuClick?.(context.id, item.action)}
-                                        disabled={props.disabledItems?.includes(item.action) 
-                                                       || (props.enabledItems ? !props.enabledItems.includes(item.action) : false
-                                                       || disableAllMenuItems
-                                                  )}
+                                        disabled={props.disabledItems?.includes(item.action)
+                                             || (props.enabledItems ? !props.enabledItems.includes(item.action) : false
+                                                  || disableAllMenuItems
+                                             )}
                                    >
                                         <item.icon /> {item.label}
                                    </DropdownMenuItem>

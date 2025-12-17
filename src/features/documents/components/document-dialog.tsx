@@ -84,12 +84,12 @@ export default function DocumentDialog(props: DialogProps) {
                          <FieldSet>
                               <FieldGroup>
                                    <Field>
-                                        <FieldLabel htmlFor="source">Office source</FieldLabel>
-                                        <OfficeSelect onSelect={handleSelectedOffice} />
+                                        <FieldLabel htmlFor="title">Title</FieldLabel>
+                                        <Textarea onChange={handleFormChange} name="title" id="title" autoComplete="off" placeholder="" />
                                    </Field>
                                    <Field>
-                                        <FieldLabel htmlFor="title">Title</FieldLabel>
-                                        <Input onChange={handleFormChange} name="title" id="title" autoComplete="off" placeholder="" />
+                                        <FieldLabel htmlFor="source">Office source</FieldLabel>
+                                        <OfficeSelect onSelect={handleSelectedOffice} />
                                    </Field>
                                    <Field>
                                         <FieldLabel htmlFor="attachment">Attachment</FieldLabel>
@@ -103,6 +103,7 @@ export default function DocumentDialog(props: DialogProps) {
                                              id="description"
                                              placeholder="Add additional information for this document."
                                              className="max-w-xl"
+                                             rows={5}
                                         />
                                    </Field>
                                    <Field>

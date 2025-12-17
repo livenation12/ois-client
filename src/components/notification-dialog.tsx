@@ -13,12 +13,13 @@ import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Dot } from "lucide-react";
 import NotifSkeleton from "./skeletons/notif-list-skeleton";
 import { Badge } from "./ui/badge";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { SubjectType } from "@/types/notification.types";
 import { Button } from "./ui/button";
 import useNotif from "@/hooks/use-global";
 
 export default function NotificationDialog(props: DialogProps) {
+     const navigate = useNavigate();
      const { state: notifState, dispatch: notifDispatch } = useNotif();
      const { execute, data, loading } = useFetch(getAllNotifications);
      const { execute: markAllAsRead } = useFetch(markAllNotifsAsRead, {
@@ -27,6 +28,11 @@ export default function NotificationDialog(props: DialogProps) {
                notifDispatch({ type: 'MARK_ALL_AS_READ' })
           }
      });
+
+     const handleNotifClick = (notifId: string, subjectType: string) => {
+          navigate(subjectType === SubjectType.DOCUMENT ? `/documents/${notifId}` : '/');
+
+     }
 
      //only fetch when dialog is opened
      useEffect(() => {
@@ -49,9 +55,9 @@ export default function NotificationDialog(props: DialogProps) {
                          {
                               loading ? <NotifSkeleton /> :
                                    data && data.length > 0 ? data.map((notif) => (
-                                        <Link to={notif.additionalData?.subject === SubjectType.DOCUMENT ? `/documents/${notif.additionalData?.subjectId}` : '#'}
+                                        <div
                                              key={notif.id}
-                                             onClick={() => props.setOpen(false)}
+                                             onClick={() => handleNotifClick(notif.id, notif.subjectType)}
                                              className="block p-3 bg-secondary/10 rounded-md hover:bg-secondary/20 transition-colors">
                                              <div className="float-end">
                                                   <p className="text-xs text-muted-foreground">{notif.createdAt}</p>
@@ -71,7 +77,7 @@ export default function NotificationDialog(props: DialogProps) {
                                                        <Dot size={32} />
                                                   </div>
                                              </section>
-                                        </Link>
+                                        </div>
                                    )) : (
                                         <p className="text-sm text-muted-foreground">No notifications available.</p>
                                    )

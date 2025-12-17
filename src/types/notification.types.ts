@@ -8,6 +8,8 @@ export interface Notification {
      targetName: string;
      isUnread: boolean;
      createdAt: string;
+     subjectType: string;
+     subjectId: string;
      additionalData?: {
           [key: string]: any;
      }

@@ -8,6 +8,7 @@ import type { RevertDocumentRequest } from '@/types/document.types'
 import useFetch from '@/hooks/use-fetch'
 import { getDocumentDetails, revertDocument } from '@/features/documents/services/document.service'
 import { Loader2, User } from 'lucide-react'
+import { getEntityDisplayName } from '@/utils/document-utils'
 
 interface RoutingSlipDialogProps extends DialogProps {
      documentId: string
@@ -19,12 +20,14 @@ const initialData: RevertDocumentRequest = {
      additionalRemarks: '',
 }
 
-export default function RevertDialog(props: RoutingSlipDialogProps) {
+export default function RevertDialog({ closeOnSucceed = true, ...props }: RoutingSlipDialogProps) {
      const { execute, data, loading } = useFetch(getDocumentDetails)
      const { execute: executeRevert, loading: revertLoading } = useFetch(revertDocument, {
           onSuccess: () => {
                props.onRevert && props.onRevert();
-               props.setOpen(false);
+               if (closeOnSucceed) {
+                    props.setOpen(false);
+               }
           }
      })
      const [formData, setFormData] = useState(initialData);
@@ -70,7 +73,11 @@ export default function RevertDialog(props: RoutingSlipDialogProps) {
                                              </h5>
                                              <h6>{data?.sourceName}</h6>
                                              <div className='flex items-center gap-1'>
-                                                  <User size={16} /> {data?.activeLog?.from.name}
+                                                  {data?.activeLog &&
+                                                       <>
+                                                            <User size={16} /> {getEntityDisplayName(data?.activeLog?.from)}
+                                                       </>
+                                                  }
                                              </div>
                                         </div>
                                    )
@@ -79,7 +86,7 @@ export default function RevertDialog(props: RoutingSlipDialogProps) {
                          <FieldSet>
                               <Field>
                                    <FieldLabel>Remarks</FieldLabel>
-                                   <Textarea rows={5} onChange={handleChange} name='remarks' />
+                                   <Textarea rows={3} onChange={handleChange} name='remarks' />
                               </Field>
                               <Field>
                                    <FieldLabel>Additional Remarks</FieldLabel>

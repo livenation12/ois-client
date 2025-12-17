@@ -2,13 +2,13 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Item, ItemContent, ItemHeader, ItemTitle } from "@/components/ui/item";
 import type { DocumentAction } from "@/types/document.types";
-import { getEntityDisplayName } from "@/utils/utils";
 import { Forward } from "lucide-react";
 import { useState } from "react";
 import DocumentLogDetailsDialog from "./document-log-details-dialog";
 import useFetch from "@/hooks/use-fetch";
 import { getDocumentLogs } from "../services/document.service";
 import ItemSkeleton from "@/components/skeletons/item-skeleton";
+import { getEntityDisplayName } from "@/utils/document-utils";
 
 export default function DocumentLogs({ documentId }: { documentId: string }) {
      const { data: logs, loading } = useFetch(getDocumentLogs, {

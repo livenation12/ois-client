@@ -35,11 +35,11 @@ export default function DocumentDetails() {
 
      return (
           <>
-               <Topbar 
+               <Topbar
                     includeBackButton
                     content={data.title}
                     toolset={<DocumentActionButtons documentId={documentId} />}
-                />
+               />
                <div className="main-content">
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                          <div className="grid gap-4 lg:col-span-2">
@@ -47,34 +47,39 @@ export default function DocumentDetails() {
                                    <CardHeader>
                                         <CardTitle>Document Information</CardTitle>
                                    </CardHeader>
-                                   <CardContent className="space-y-4">
+                                   <CardContent>
                                         <DetailItem label="Title" value={data.title} />
                                         <DetailItem label="Document ID" value={<>#{data.documentCode}</>} />
                                         <DetailItem label="Type" value={data.sourceType} />
                                         <DetailItem label="Status" value={data.status} />
                                         <DetailItem label="Description" value={data.description} />
-                                        <DetailItem label="Created by" value={data.createdBy?.fullName} />
-                                        <DetailItem label="Created at" value={data.createdAt} />
-                                        <DetailItem label="Attachments" value={
+                                        <DetailItem label="Encoded by" value={data.createdBy?.fullName} />
+                                        <DetailItem label="Encoded at" value={data.createdAt} />
+                                        <DetailItem applyHoverEffect={false} label="Attachments" value={
                                              <>
                                                   {
                                                        data.attachments?.length === 0 ? (
                                                             <span className="text-sm text-muted-foreground">No attachments available.</span>
                                                        ) :
                                                             data.attachments?.map((attachment, index) => (
-                                                                 <a key={index} href={uploadsConcat(attachment.filePath)} download target="__blank" className="w-full group">
+                                                                 <a key={index} href={uploadsConcat(attachment.filePath)} download target="__blank" className="w-full group relative">
                                                                       <Badge variant="secondary" className="px-2 py-3 w-full flex justify-between items-center">
-                                                                           <div className="inline-flex gap-1 items-center">
+                                                                           <div className="inline-flex gap-1 items-center relative z-10 group-hover:opacity-30 transition-all duration-300 ease-in-out">
                                                                                 <File size={16} className="shrink-0" />
                                                                                 <span className="truncate block overflow-hidden text-ellipsis whitespace-nowrap">
                                                                                      {data.attachments?.[0]?.originalName}
                                                                                 </span>
                                                                            </div>
-                                                                           <span className="inline-flex gap-1 opacity-0 group-hover:opacity-100 transition-all group-hover:-translate-x-2.5 ease-in duration-200">
-                                                                                <Download size={16} /> Download
+
+                                                                           {/* Overlay effect for dimming */}
+                                                                           <div className="absolute inset-0 bg-black opacity-30 transition-opacity duration-300 group-hover:opacity-50 z-0" />
+
+                                                                           <span className="inline-flex gap-1 opacity-0 group-hover:opacity-100 group-hover:bg-background/70 p-2 transition-all group-hover:-translate-x-2.5 ease-in duration-300 z-10 rounded">
+                                                                                <Download size={16} />Click to download
                                                                            </span>
                                                                       </Badge>
                                                                  </a>
+
                                                             ))
                                                   }
                                              </>
